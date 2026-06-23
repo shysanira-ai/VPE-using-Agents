@@ -1,0 +1,58 @@
+[
+  {
+    "account_number": "11223344",
+    "account_holder": "San Shy Current Account",
+    "balance": 50000.0,
+    "account_type": "Current",
+    "currency": "INR",
+    "country": "India"
+  },
+  {
+    "account_number": "55667788",
+    "account_holder": "San Shy Savings Account",
+    "balance": 45000.0,
+    "account_type": "Savings",
+    "currency": "INR",
+    "country": "India"
+  },
+  {
+    "account_number": "99001122",
+    "account_holder": "San Shy USD Account",
+    "balance": 5500.0,
+    "account_type": "Savings",
+    "currency": "USD",
+    "country": "India"
+  },
+  {
+    "account_number": "12345678",
+    "account_holder": "ABC Suppliers Ltd",
+    "balance": 15000.0,
+    "account_type": "Current",
+    "currency": "INR",
+    "country": "India"
+  },
+  {
+    "account_number": "87654321",
+    "account_holder": "Global Logistics Corp",
+    "balance": 0.0,
+    "account_type": "Current",
+    "currency": "USD",
+    "country": "USA"
+  },
+  {
+    "account_number": "11112222",
+    "account_holder": "Tech Solutions Germany",
+    "balance": 0.0,
+    "account_type": "Current",
+    "currency": "EUR",
+    "country": "Germany"
+  },
+  {
+    "account_number": "33334444",
+    "account_holder": "Charlie Local Groceries",
+    "balance": 0.0,
+    "account_type": "Savings",
+    "currency": "INR",
+    "country": "India"
+  }
+]

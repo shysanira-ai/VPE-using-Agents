@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice-Based Payment Entry Dashboard</title>
+    <!-- Premium Google Fonts -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Header Section -->
+        <header>
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
+                        <path
+                            d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="brand-name">Speak-n-Pay</h1>
+                    <span class="badge-tag">AI Agent Orchestrator</span>
+                </div>
+            </div>
+            <div id="connection-status" class="badge-tag"
+                style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); color: #34D399;">
+                Active API Connection
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="tabs-navigation">
+            <button class="tab-btn active" onclick="switchTab('dashboard')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="9" />
+                    <rect x="14" y="3" width="7" height="5" />
+                    <rect x="14" y="12" width="7" height="9" />
+                    <rect x="3" y="16" width="7" height="5" />
+                </svg>
+                Dashboard
+            </button>
+            <button class="tab-btn" onclick="switchTab('voice')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                    <line x1="12" y1="19" x2="12" y2="23" />
+                    <line x1="8" y1="23" x2="16" y2="23" />
+                </svg>
+                Voice Entry
+            </button>
+            <button class="tab-btn" onclick="switchTab('form')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                </svg>
+                Payment Form
+            </button>
+            <button class="tab-btn" onclick="switchTab('review')">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+                Review & Execute
+            </button>
+        </nav>
+
+        <!-- SCREEN 1: DASHBOARD -->
+        <div id="dashboard" class="tab-content active">
+            <div class="dashboard-grid">
+                <div class="glass-card">
+                    <div class="metric-title">Primary User Account</div>
+                    <div class="metric-value" id="user-current-balance">15,000.00 INR</div>
+                    <div class="metric-sub">San Shy Current (11223344)</div>
+                </div>
+                <div class="glass-card">
+                    <div class="metric-title">Savings Account</div>
+                    <div class="metric-value" id="user-savings-balance">4,500.00 INR</div>
+                    <div class="metric-sub">San Shy Savings (55667788)</div>
+                </div>
+                <div class="glass-card">
+                    <div class="metric-title">Saved Drafts</div>
+                    <div class="metric-value" id="drafts-count">0</div>
+                    <div class="metric-sub" id="drafts-status-sub">Draft payments ready for review</div>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <div class="panel-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    Recent Payment Activities & Drafts
+                </div>
+                <div class="table-container">
+                    <table id="drafts-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Debtor (Sender)</th>
+                                <th>Creditor (Recipient)</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="drafts-table-body">
+                            <!-- Loaded dynamically via JavaScript -->
+                            <tr>
+                                <td colspan="8" style="text-align: center; color: var(--text-secondary);">Loading
+                                    drafts...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN 2: VOICE ENTRY -->
+        <div id="voice" class="tab-content">
+            <div class="voice-entry-grid">
+                <!-- Left panel: Audio capture & upload -->
+                <div class="glass-card">
+                    <div class="panel-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                            <line x1="12" y1="19" x2="12" y2="23" />
+                            <line x1="8" y1="23" x2="16" y2="23" />
+                        </svg>
+                        Audio Input Controls
+                    </div>
+
+                    <h3 style="margin-bottom: 0.5rem; font-size: 1rem; color: #FFF;">Option A: Microphone Recording</h3>
+                    <div class="voice-control-box">
+                        <button id="record-btn" class="record-btn" onclick="toggleRecording()">
+                            <svg viewBox="0 0 24 24" id="mic-icon">
+                                <path
+                                    d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
+                            </svg>
+                        </button>
+                        <p id="record-status" style="margin-top: 1rem; font-weight: 500; color: var(--text-secondary);">
+                            Click microphone to start recording</p>
+                        <div id="audio-playback-container" class="audio-feedback" style="display: none;">
+                            <audio id="recorded-audio" controls></audio>
+                        </div>
+                    </div>
+
+                    <h3
+                        style="margin-bottom: 0.5rem; font-size: 1rem; color: #FFF; padding-top: 0.5rem; border-top: 1px solid var(--border-color);">
+                        Option B: Upload Audio File</h3>
+                    <div class="file-upload-wrapper">
+                        <label class="custom-file-upload">
+                            <input type="file" id="audio-file-input" accept="audio/*"
+                                onchange="handleAudioUpload(event)">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" y1="3" x2="12" y2="15" />
+                            </svg>
+                            Choose Audio File (WAV/MP3)
+                        </label>
+                        <p id="upload-status"
+                            style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem; text-align: center;">
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right panel: Interactive testing dataset / utilities -->
+                <div class="glass-card">
+                    <div class="panel-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                        </svg>
+                        Interactive Course Test Prompts
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                        Don't want to record audio? Select a speech command below to instantly pipe it to the AI NLP
+                        Extraction Agent:
+                    </p>
+                    <div id="sample-utterances">
+                        <!-- Loaded dynamically via javascript -->
+                    </div>
+
+                    <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                        <h4 class="display-label">Or, Type a command directly:</h4>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="text" id="manual-text-input"
+                                placeholder="e.g. Pay ten thousand to ABC Suppliers tomorrow">
+                            <button class="btn btn-primary" style="padding: 0.6rem 1.2rem;"
+                                onclick="processManualText()">Parse</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Output section (Transcript & Tags) -->
+            <div class="glass-card" style="margin-top: 1.5rem;">
+                <div class="panel-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>
+                    AI Agent Pipeline Output
+                </div>
+
+                <div class="display-label">Speech Transcript:</div>
+                <div id="speech-transcript" class="display-box empty">No audio processed yet. Speak, upload, or click a
+                    course test prompt above.</div>
+
+                <div class="display-label">Extracted Entities (NLP Tokens):</div>
+                <div id="extracted-entities" class="display-box" style="min-height: 60px;">
+                    <div style="color: var(--text-secondary); font-style: italic;">No entities extracted yet.</div>
+                </div>
+
+                <div class="button-row" style="margin-top: 1rem; border: none; padding: 0;">
+                    <button class="btn btn-secondary" onclick="clearVoiceInput()">Clear Output</button>
+                    <button id="next-to-form-btn" class="btn btn-primary" disabled onclick="switchTab('form')">
+                        Populate & View Form
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN 3: PAYMENT FORM -->
+        <div id="form" class="tab-content">
+            <div class="glass-card">
+                <div class="panel-title">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                        <polyline points="10 9 9 9 8 9" />
+                    </svg>
+                    Payment Entry Form
+                </div>
+
+                <form id="payment-form" onsubmit="event.preventDefault();">
+                    <input type="hidden" id="form-draft-id" value="">
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="form-debtor">Debtor (Sender Account) *</label>
+                            <select id="form-debtor" required onchange="triggerRevalidation()">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="form-creditor">Creditor (Recipient Account) *</label>
+                            <select id="form-creditor" required onchange="triggerRevalidation()">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="form-amount">Amount *</label>
+                            <input type="number" step="0.01" id="form-amount" placeholder="0.00" required
+                                oninput="triggerRevalidation()">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="form-currency">Currency *</label>
+                            <select id="form-currency" required onchange="triggerRevalidation()">
+                                <option value="INR">INR (Rupees)</option>
+                                <option value="USD">USD (Dollars)</option>
+                                <option value="EUR">EUR (Euros)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="form-date">Payment Date *</label>
+                            <input type="date" id="form-date" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="form-category">Category (Auto-Classified)</label>
+                            <select id="form-category">
+                                <option value="Domestic Payment">Domestic Payment</option>
+                                <option value="International Payment">International Payment</option>
+                                <option value="Multi-Currency Payment">Multi-Currency Payment</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="form-notes">Payment Notes</label>
+                            <textarea id="form-notes" rows="3"
+                                placeholder="Enter transaction reference details..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="button-row">
+                        <button type="button" class="btn btn-secondary" onclick="resetPaymentForm()">Reset Form</button>
+                        <button type="button" class="btn btn-primary" onclick="saveFormDraft()">
+                            Save Draft & Verify
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                                <polyline points="12 5 19 12 12 19" />
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- SCREEN 4: PAYMENT REVIEW & EXECUTE -->
+        <div id="review" class="tab-content">
+            <div class="review-panel">
+                <!-- Validation Summary Card -->
+                <div class="glass-card">
+                    <div class="panel-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                            <polyline points="22 4 12 14.01 9 11.01" />
+                        </svg>
+                        Payment Verification & Review
+                    </div>
+
+                    <!-- Live verification cards -->
+                    <div id="validation-cards-container">
+                        <div
+                            style="color: var(--text-secondary); font-style: italic; text-align: center; padding: 2rem 0;">
+                            No transaction loaded. Fill the form or run a voice prompt to initiate validation.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transaction Summary Info -->
+                <div class="glass-card" id="tx-summary-card" style="display: none;">
+                    <div class="panel-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                            <line x1="1" y1="10" x2="23" y2="10" />
+                        </svg>
+                        Transfer Summary
+                    </div>
+                    <div class="accounts-grid">
+                        <div class="account-card-mini">
+                            <div class="metric-title" style="margin-bottom: 0.2rem;">From (Debtor)</div>
+                            <div class="name" id="summary-debtor-name">-</div>
+                            <div class="details" id="summary-debtor-num">-</div>
+                            <div class="balance" id="summary-debtor-bal">Bal: 0.00</div>
+                        </div>
+                        <div style="display:flex; align-items:center; justify-content:center;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" style="color: var(--primary-color);">
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                                <polyline points="12 5 19 12 12 19" />
+                            </svg>
+                        </div>
+                        <div class="account-card-mini">
+                            <div class="metric-title" style="margin-bottom: 0.2rem;">To (Creditor)</div>
+                            <div class="name" id="summary-creditor-name">-</div>
+                            <div class="details" id="summary-creditor-num">-</div>
+                            <div class="balance" id="summary-creditor-bal" style="color: var(--text-secondary)">Bal: -
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <span style="font-size: 0.85rem; color: var(--text-secondary);">Transaction Amount:</span>
+                            <h2 id="summary-tx-amount"
+                                style="font-family: 'Outfit'; font-weight:800; color: #FFF; font-size: 2.2rem;">0.00 INR
+                            </h2>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="font-size: 0.85rem; color: var(--text-secondary);">Classification:</span>
+                            <p id="summary-tx-category" style="font-weight:600; color: var(--primary-color);">Domestic
+                                Payment</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agent Trace Log Console -->
+                <div class="glass-card">
+                    <div class="panel-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="4 17 10 11 15 16 22 9" />
+                            <polyline points="17 9 22 9 22 14" />
+                        </svg>
+                        AI Multi-Agent Execution Log
+                    </div>
+                    <div class="logs-box" id="agent-logs-console">
+                        [System Status] Standby. Pipeline logs will output here in real-time...
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button class="btn btn-secondary" onclick="switchTab('form')">Back to Edit</button>
+                    <button id="execute-payment-btn" class="btn btn-success" disabled
+                        onclick="submitPaymentTransaction()">
+                        Confirm & Execute Payment
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12" />
+                            <polyline points="12 5 19 12 12 19" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load UI Core Logic script -->
+    <script src="js/app.js"></script>
+</body>
+
+</html>

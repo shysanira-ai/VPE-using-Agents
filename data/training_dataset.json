@@ -1,0 +1,57 @@
+[
+  {
+    "text": "Pay ABC Suppliers five thousand rupees tomorrow from my current account.",
+    "expected": {
+      "debtor": "San Shy Current Account",
+      "creditor": "ABC Suppliers Ltd",
+      "amount": 5000.0,
+      "currency": "INR",
+      "payment_date": "tomorrow",
+      "notes": "Voice payment to ABC Suppliers"
+    }
+  },
+  {
+    "text": "Transfer ten thousand to ABC Suppliers.",
+    "expected": {
+      "debtor": "San Shy Current Account",
+      "creditor": "ABC Suppliers Ltd",
+      "amount": 10000.0,
+      "currency": "INR",
+      "payment_date": "today",
+      "notes": "Voice payment"
+    }
+  },
+  {
+    "text": "Transfer five hundred dollars from my USD account to Global Logistics Corp.",
+    "expected": {
+      "debtor": "San Shy USD Account",
+      "creditor": "Global Logistics Corp",
+      "amount": 500.0,
+      "currency": "USD",
+      "payment_date": "today",
+      "notes": "Voice transfer to Global Logistics Corp"
+    }
+  },
+  {
+    "text": "Send 300 euros to Tech Solutions Germany on next Monday.",
+    "expected": {
+      "debtor": "San Shy Current Account",
+      "creditor": "Tech Solutions Germany",
+      "amount": 300.0,
+      "currency": "EUR",
+      "payment_date": "next Monday",
+      "notes": "Voice payment to Tech Solutions Germany"
+    }
+  },
+  {
+    "text": "Pay 250 rupees from savings to Charlie Local Groceries",
+    "expected": {
+      "debtor": "San Shy Savings Account",
+      "creditor": "Charlie Local Groceries",
+      "amount": 250.0,
+      "currency": "INR",
+      "payment_date": "today",
+      "notes": "Voice payment to Charlie Local Groceries"
+    }
+  }
+]

@@ -1,0 +1,44 @@
+All code runs completely offline on CPU using your local spaCy and ChromaDB/difflib setups with no cloud LLM API costs.
+
+
+Activate your virtual environment: 
+=====================================
+Make sure you are running Python inside the project's virtual environment (.venv) where all dependencies are installed.
+
+In PowerShell:
+.venv\Scripts\Activate.ps1
+
+In Command Prompt (CMD):
+.venv\Scripts\activate.bat
+
+
+
+
+1. Properly activate your virtual environment in PowerShell:
+
+.venv\Scripts\Activate.ps1
+
+
+2. Opgrade setuptools and pip in the environment:
+pip install --upgrade pip setuptools
+
+
+3. Install the requirements again:
+pip install -r requirements.txt
+
+
+4. Download the small English language parsing model 
+python -m spacy download en_core_web_sm
+
+
+5. To run the web app, execute the following command:
+python -m uvicorn backend.app:app --reload --port 8000
+
+
+6.  Open your browser and navigate to **`http://localhost:8000`**.
+
+
+
+
+=============================
+
