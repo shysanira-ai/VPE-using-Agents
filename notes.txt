@@ -19,7 +19,7 @@ In Command Prompt (CMD):
 .venv\Scripts\Activate.ps1
 
 
-2. Opgrade setuptools and pip in the environment:
+2. Upgrade setuptools and pip in the environment:
 pip install --upgrade pip setuptools
 
 
