@@ -1,8 +1,8 @@
 # Speak-n-Pay: Voice-Based Payment Entry Using AI Agents
 
-Speak-n-Pay is a complete, production-ready, locally hosted software application that allows bank operators or consumers to speak payment details naturally to create, validate, and execute banking drafts. 
+Speak-n-Pay is a complete, locally hosted software application that allows users to speak payment details naturally to create, validate, and execute payments. 
 
-This project was built as a capstone demonstration for the **Advanced AI Course**, showcasing how multiple specialized AI agents, vector stores (RAG), speech recognition, and entity extraction pipelines can be integrated to automate manual payment entry systems.
+This project was built to showcase how multiple specialized AI agents, vector stores (RAG), speech recognition, and entity extraction pipelines can be integrated to automate manual payment entry systems.
 
 ---
 
@@ -11,11 +11,11 @@ This project was built as a capstone demonstration for the **Advanced AI Course*
 Inside the code and system architecture, the following open-source tools were selected:
 
 1. **OpenAI Whisper (Speech-to-Text)**:
-   - *Why*: Whisper is a state-of-the-art encoder-decoder transformer model. The `tiny` variant runs extremely fast on local CPUs (~70MB) with an accuracy rate exceeding 90%, meeting our sub-5-second processing budget.
+   - *Why*: Whisper is a state-of-the-art encoder-decoder transformer model. The `tiny` variant runs extremely fast on local CPUs (~70MB) with an accuracy rate exceeding 90% and in budget.
    - *Fallback*: We built a automatic fallback to the SpeechRecognition library using Google Web Speech API to ensure the app continues to function even if the host machine lacks binary tools like `ffmpeg`.
 
 2. **spaCy en_core_web_sm (Named Entity Recognition)**:
-   - *Why*: Large Language Models (LLMs) can be slow, resource-heavy, and expensive. spaCy provides lightning-fast local CPU parsing. Combining its out-of-the-box entity tagger (PERSON, ORG, DATE, MONEY) with regular expression grammar rules achieves a field extraction accuracy of over 90%.
+   - *Why*: Large Language Models (LLMs) can be slow, resource-heavy, and expensive. spaCy provides fast local CPU parsing. Combining its out-of-the-box entity tagger (PERSON, ORG, DATE, MONEY) with regular expression grammar rules achieves a accuracy of over 90%.
 
 3. **ChromaDB (Vector Database & RAG)**:
    - *Why*: Users rarely speak bank accounts using exact official names (e.g., they say "ABC Suppliers" or "my savings account" instead of "ABC Suppliers Ltd" or "San Shy Savings Account"). ChromaDB acts as our semantic index (Retrieval-Augmented Generation). We compute embedding vectors of all bank accounts and index them locally. When an entity is extracted, we execute a semantic vector similarity query to retrieve the actual account matching the spoken phrase.
@@ -116,7 +116,7 @@ This script computes:
 - Overall Field Extraction Accuracy (Target: > 90%)
 - Average Pipeline Latency (Target: < 5s)
 
-### Option 2: Comprehensive Unit and End-to-End Test Suite (Terminal)
+### Option 2: AI Model tests and End-to-End tests (Terminal)
 Run the isolated, multi-agent AI and relational database test suite validating both NLP extraction intelligence and database updates.
 ```bash
 python test_suite.py
@@ -164,7 +164,4 @@ graph TD
    - Replace standard rules and spaCy NER with a local llama3 or mistral model queried via Ollama to handle even more complex semantic instructions and intent parsing.
 2. **True Waveform UI**:
    - Integrate an interactive canvas wave visualizer on the Voice Entry tab to show active recording inputs in real time.
-3. **Advanced FX Broker APIs**:
-   - For multi-currency payments, hook the pipeline into real-time forex rate APIs to execute automatic conversions before checking debtor balances.
-4. **Biometric Voice Signature Validation**:
-   - Add speaker identification verification to authorize transactions based on the voice pattern of the user.
+
