@@ -1,2 +1,9 @@
-[tool.vercel]
-entrypoint = "backend.app:app"
+
+[project]
+name = "Speak-n-Pay"
+version = "0.1.0"
+
+dependencies = [
+    "fastapi",
+    "uvicorn"
+]
